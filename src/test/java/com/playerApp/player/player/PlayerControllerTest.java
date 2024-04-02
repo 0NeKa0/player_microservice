@@ -64,9 +64,9 @@ public class PlayerControllerTest {
                 "Kaufman", "Netta Kaufman", 5, 2, "Team B",
                 "Team C", "Team D", "Team E", "Team F", "Team G");
 
-        when(playerService.getPlayerById(file, playerId)).thenReturn(player);
+        when(playerService.getPlayerById(playerId)).thenReturn(player);
 
-        Player result = playerController.getPlayerById(file, playerId);
+        Player result = playerController.getPlayerById(playerId);
 
         assertEquals(playerId, result.getPlayerId());
         assertEquals("Netta", result.getNameFirst());

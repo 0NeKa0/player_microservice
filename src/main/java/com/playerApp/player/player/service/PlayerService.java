@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 public class PlayerService {
 
     private PlayerDao playerDao;
-    private static final Logger logger = LoggerFactory.getLogger(PlayerService.class);
 
     private MultipartFile csvFile;
     @Autowired
@@ -38,7 +37,7 @@ public class PlayerService {
     }
 
     public List<Player> getPlayersList() throws IOException, CsvException {
-        logger.info("Getting players list from file: {}", csvFile.getName());
+        log.info("Getting players list from file: {}", csvFile.getName());
         List<Player> playersList = new ArrayList<>();
         try (CSVReader reader = new CSVReader(new InputStreamReader(csvFile.getInputStream()))) {
             String[] line;
@@ -47,32 +46,32 @@ public class PlayerService {
             }
         }
         catch (IOException | CsvException e) {
-            logger.error("Error adding player to playerList", e.getMessage());
+            log.error("Error adding player to playerList", e.getMessage());
             throw new RuntimeException(e);
         }
         return playersList;
     }
 
-    public Player getPlayerById(MultipartFile file, String playerId) throws IOException, CsvException {
-        logger.info("Getting player by ID: {}", playerId);
+    public Player getPlayerById(String playerId) throws IOException, CsvException {
+        log.info("Getting player by ID: {}", playerId);
         try {
             List<Player> players = getPlayersList();
             for (Player player: players) {
                 if (playerId.equals(player.getPlayerId())) {
-                    logger.info("Found player with ID: {}", playerId);
+                    log.info("Found player with ID: {}", playerId);
                     return player;
                 }
             }
         }
         catch (IOException | CsvException e) {
-            logger.error("Error getting player by ID: {}", playerId, e.getMessage());
+            log.error("Error getting player by ID: {}", playerId, e.getMessage());
             throw new RuntimeException(e);
         }
         return null;
     }
 
     private Player createPlayer(String[] line) {
-        logger.debug("Creating player from line: {}", Arrays.toString(line));
+        log.debug("Creating player from line: {}", Arrays.toString(line));
         /* TODO: Change Player object creation to use a PlayerBuilder such as:
         return Player.builder()
                 .playerID(line[0])

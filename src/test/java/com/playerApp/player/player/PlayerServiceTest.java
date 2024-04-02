@@ -52,7 +52,7 @@ class PlayerServiceTest {
         String playerId = "1";
         Player expectedPlayer = new Player("1", 20, 10, 5, "IL", "Forward", "Team A", 100, 50, 10, "USA", "Active", "2021-01-01", "Netta", "Kaufman", "Netta Kaufman", 5, 2, "Team B", "Team C", "Team D", "Team E", "Team F", "Team G");
 
-        Player actualPlayer = playerService.getPlayerById(csvFile, playerId);
+        Player actualPlayer = playerService.getPlayerById(playerId);
 
         assertEquals(expectedPlayer, actualPlayer);
     }
