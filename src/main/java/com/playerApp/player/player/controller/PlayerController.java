@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class PlayerController {
 
+    @Autowired
     private PlayerService service;
 
 
