@@ -50,7 +50,7 @@ public class PlayerService {
         }
     }
 
-    public List<Player> getPlayersList() throws IOException, CsvException {
+    public List<Player> getPlayers() throws IOException, CsvException {
         log.info("Getting players list from file: {}", csvFile.getName());
         return players;
     }
