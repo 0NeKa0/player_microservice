@@ -26,28 +26,19 @@ public class PlayerControllerTest {
     @InjectMocks
     private PlayerController playerController;
 
+    private Map<String, Player> players;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testGetPlayersList() throws IOException, CsvException {
-        List<Player> players = new ArrayList<>();
-        players.add(new Player("1", 20, 10, 5, "IL",
-                "Forward", "Team A", 100, 50, 10,
-                "USA", "Active", "2021-01-01", "Netta",
-                "Kaufman", "Netta Kaufman", 5, 2, "Team B",
-                "Team C", "Team D", "Team E", "Team F", "Team G"));
-        players.add(new Player("2", 20, 10, 5, "IL",
-                "Forward", "Team A", 100, 50, 10,
-                "USA", "Active", "2021-01-01", "Shira",
-                "Cohen", "Shira Cohen", 5, 2, "Team B",
-                "Team C", "Team D", "Team E", "Team F", "Team G"));
+    public void testGetPlayers() throws IOException, CsvException {
+        createDummyPlayersList();
+        when(playerService.getPlayers()).thenReturn(players);
 
-        when(playerService.getPlayersList()).thenReturn(players);
-
-        List<Player> result = playerController.getPlayersList();
+        Map<String, Player> result = playerController.getPlayers();
 
         assertEquals(2, result.size());
         assertEquals("Netta", result.getNameFirst(0).getName());
@@ -70,5 +61,19 @@ public class PlayerControllerTest {
 
         assertEquals(playerId, result.getPlayerId());
         assertEquals("Netta", result.getNameFirst());
+    }
+
+    private Map<String, Player> createDummyPlayersList() {
+        players = new HashMap<>();
+        players.put("1", new Player("1", 20, 10, 5, "IL",
+                "Forward", "Team A", 100, 50, 10,
+                "USA", "Active", "2021-01-01", "Netta",
+                "Kaufman", "Netta Kaufman", 5, 2, "Team B",
+                "Team C", "Team D", "Team E", "Team F", "Team G"));
+        players.put("2", new Player("2", 20, 10, 5, "IL",
+                "Forward", "Team A", 100, 50, 10,
+                "USA", "Active", "2021-01-01", "Shira",
+                "Cohen", "Shira Cohen", 5, 2, "Team B",
+                "Team C", "Team D", "Team E", "Team F", "Team G"));
     }
 }
