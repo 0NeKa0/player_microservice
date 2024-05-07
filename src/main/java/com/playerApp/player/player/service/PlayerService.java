@@ -28,39 +28,39 @@ public class PlayerService {
     private PlayerDao playerDao;
 
     private MultipartFile csvFile;
+
+    private Map<String, Player> players;
     @Autowired
     private ResourceLoader resourceLoader;
 
     @PostConstruct
     public void init() throws IOException {
         csvFile = new MockMultipartFile("players.xlsx", new FileInputStream(new File("C:/Users/User/Desktop/Open Source Projects/player/player/player.csv")));
-    }
-
-    public List<Player> getPlayersList() throws IOException, CsvException {
-        log.info("Getting players list from file: {}", csvFile.getName());
-        List<Player> playersList = new ArrayList<>();
+        players = new HashMap<>();
         try (CSVReader reader = new CSVReader(new InputStreamReader(csvFile.getInputStream()))) {
             String[] line;
             while ((line = reader.readNext()) != null) {
-                playersList.add(createPlayer(line));
+                // line[0] represents playerId
+                players.put(line[0], createPlayer(line));
             }
         }
         catch (IOException | CsvException e) {
             log.error("Error adding player to playerList", e.getMessage());
             throw new RuntimeException(e);
         }
-        return playersList;
+    }
+
+    public List<Player> getPlayersList() throws IOException, CsvException {
+        log.info("Getting players list from file: {}", csvFile.getName());
+        return players;
     }
 
     public Player getPlayerById(String playerId) throws IOException, CsvException {
         log.info("Getting player by ID: {}", playerId);
         try {
-            List<Player> players = getPlayersList();
-            for (Player player: players) {
-                if (playerId.equals(player.getPlayerId())) {
-                    log.info("Found player with ID: {}", playerId);
-                    return player;
-                }
+            Player player = players.get(playerId);
+            log.info("Found player with ID: {}", playerId);
+            return player;
             }
         }
         catch (IOException | CsvException e) {
