@@ -10,4 +10,6 @@ public interface PlayerDao extends JpaRepository<Player, String> {
     //TODO: Data layer built this way because I planned to use h2 in-memory db for this microservice
     // properties are initialized in `application.properties` and the db ran in http://localhost:8080/h2-console
 
+    // Hibernate and JPA logic.
+
 }
