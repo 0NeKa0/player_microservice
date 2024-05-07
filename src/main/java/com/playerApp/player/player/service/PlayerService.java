@@ -50,7 +50,7 @@ public class PlayerService {
         }
     }
 
-    public Map<String, Player> getPlayers() throws IOException, CsvException {
+    public Map<String, Player> getPlayers() {
         log.info("Getting players list from file: {}", csvFile.getName());
         return players;
     }
