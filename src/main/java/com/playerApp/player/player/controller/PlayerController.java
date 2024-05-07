@@ -22,7 +22,7 @@ public class PlayerController {
 
 
     @GetMapping("/players")
-    public List<Player> getPlayers() throws IOException, CsvException {
+    public Map<String, Player> getPlayers() throws IOException, CsvException {
         log.info("Fetching players list");
         return service.getPlayers();
     }
