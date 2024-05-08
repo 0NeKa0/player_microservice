@@ -45,6 +45,7 @@ public class PlayerService {
                 players.put(line[0], createPlayer(line));
             }
         }
+        // TODO: Add custom exceptions handling
         catch (IOException | CsvException e) {
             log.error("Error adding player to playerList", e.getMessage());
             throw new RuntimeException(e);
