@@ -37,6 +37,7 @@ public class PlayerService {
     public void init() throws IOException {
         csvFile = new MockMultipartFile("players.xlsx", new FileInputStream(new File("C:/Users/User/Desktop/Open Source Projects/player/player/player.csv")));
         players = new HashMap<>();
+        log.info("Innitializing players from file: {}", csvFile.getName());
         try (CSVReader reader = new CSVReader(new InputStreamReader(csvFile.getInputStream()))) {
             String[] line;
             while ((line = reader.readNext()) != null) {
